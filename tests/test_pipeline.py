@@ -46,6 +46,32 @@ def test_local_classifier_can_add_a_lead_for_an_unmatched_log_message():
     assert any("name resolution" in action.title.lower() for action in result.recommendations)
 
 
+def test_rules_still_work_when_joblib_is_not_installed(monkeypatch):
+    import builtins
+
+    from opspilot import ml_model
+
+    original_import = builtins.__import__
+
+    def import_without_joblib(name, *args, **kwargs):
+        if name == "joblib":
+            raise ModuleNotFoundError("No module named 'joblib'")
+        return original_import(name, *args, **kwargs)
+
+    ml_model._load_artifact.cache_clear()
+    try:
+        with monkeypatch.context() as patch:
+            patch.setattr(builtins, "__import__", import_without_joblib)
+            ready, _, error = ml_model.classifier_status()
+            result = analyze_log_text("2026-10-14T10:00:00Z ERROR api database connection refused")
+        assert not ready
+        assert "joblib is not installed" in error
+        assert result.hypotheses
+        assert "Database" in result.hypotheses[0].summary
+    finally:
+        ml_model._load_artifact.cache_clear()
+
+
 def test_pipeline_assesses_healthy_but_unfamiliar_logs():
     result = analyze_log_text("worker-7 completed task 42 in 18ms\nworker-8 completed task 43 in 22ms")
     assert "No explicit error" in result.assessment

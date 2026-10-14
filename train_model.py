@@ -114,6 +114,7 @@ def train_model(data_path: Path = DEFAULT_DATA, model_path: Path = DEFAULT_MODEL
         "dataset_sha256": hashlib.sha256(data_path.read_bytes()).hexdigest(),
         "python_version": platform.python_version(),
         "scikit_learn_version": sklearn.__version__,
+        "joblib_version": joblib.__version__,
         "classes": sorted(set(labels)),
         "examples": len(texts),
         "train_examples": len(texts),

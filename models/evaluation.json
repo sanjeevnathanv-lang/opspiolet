@@ -4,6 +4,7 @@
   "dataset_sha256": "96548d34212da99b3687ba0b18026878ec6ab2a463331ef29483c24f05668d9f",
   "python_version": "3.12.14",
   "scikit_learn_version": "1.9.1",
+  "joblib_version": "1.6.0",
   "classes": [
     "authentication",
     "cpu",

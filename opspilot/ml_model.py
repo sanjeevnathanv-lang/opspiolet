@@ -6,8 +6,6 @@ from collections import defaultdict
 from functools import lru_cache
 from pathlib import Path
 
-import joblib
-
 from .models import LogEvent, PatternFinding, RootCauseHypothesis
 
 MODEL_PATH = Path(__file__).resolve().parent.parent / "models" / "log_cause_classifier.joblib"
@@ -85,6 +83,10 @@ _RULE_MARKERS = {
 def _load_artifact() -> tuple[dict | None, str | None]:
     if not MODEL_PATH.is_file():
         return None, "trained classifier artifact is missing"
+    try:
+        import joblib
+    except ImportError:
+        return None, "joblib is not installed; install the project requirements to enable the local classifier"
     try:
         artifact = joblib.load(MODEL_PATH)
         if not isinstance(artifact, dict) or "pipeline" not in artifact:
