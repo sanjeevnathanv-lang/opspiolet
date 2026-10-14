@@ -48,8 +48,12 @@ def build_incident_answer(result: AnalysisResult) -> str:
     )
     if result.hypotheses:
         lead = result.hypotheses[0]
-        summary += f"\n\n**Leading lead:** {lead.summary} (rule evidence score **{lead.confidence:.0%}**)."
-        summary += "\n\nI ranked this from the matching log signatures and corroborating evidence below. It is a lead to validate—not proof of root cause."
+        score_name = "model match score" if lead.method == "model" else "rule evidence score"
+        summary += f"\n\n**Leading signal:** {lead.summary} ({score_name} **{lead.confidence:.0%}**)."
+        if lead.method == "model":
+            summary += "\n\nThe trained text classifier matched this against its bundled examples. The score is not calibrated; use the cited log lines as evidence and validate the lead."
+        else:
+            summary += "\n\nI ranked this from transparent log rules and corroborating evidence below. It is a lead to validate—not proof of root cause."
     elif result.error_count:
         summary += "\n\nI found errors, but the current rules could not identify a specific cause. I’ll keep the assessment cautious and show the raw error evidence."
     elif result.findings:
@@ -81,6 +85,12 @@ def answer_follow_up(question: str, result: AnalysisResult | None) -> str:
         if not result.hypotheses:
             return "There isn't a ranked root-cause hypothesis for this log batch, so I can't give a cause score. The score is based on local rule matches—not a calibrated probability."
         lead = result.hypotheses[0]
+        if lead.method == "model":
+            return (
+                f"The local text classifier's leading signal is **{lead.summary}**, with a **{lead.confidence:.0%} model match score**. "
+                "This score is not calibrated as a probability, and the training examples are a small curated prototype set. "
+                "Validate the cited events against metrics, traces, and recent changes."
+            )
         return (
             f"The leading hypothesis is **{lead.summary}**, with a **{lead.confidence:.0%} rule evidence score**. "
             "That score reflects how strongly configured patterns and corroborating events matched; it is not a statistical probability or proof. "
@@ -112,9 +122,13 @@ def answer_follow_up(question: str, result: AnalysisResult | None) -> str:
     if any(term in query for term in ("why", "cause", "root", "evidence", "what happened", "explain", "lead")):
         if result.hypotheses:
             lead = result.hypotheses[0]
-            lines = [f"The strongest current lead is **{lead.summary}** (rule evidence score **{lead.confidence:.0%}**). Evidence:"]
+            score_name = "model match score" if lead.method == "model" else "rule evidence score"
+            lines = [f"The strongest current signal is **{lead.summary}** ({score_name} **{lead.confidence:.0%}**). Evidence:"]
             lines.extend(f"- {item}" for item in lead.evidence[:5])
-            lines.append("\nThis is a rule-based lead, not causal proof. Check the correlated window against metrics, traces, and recent deployments.")
+            if lead.method == "model":
+                lines.append("\nThe classifier learned patterns from the bundled examples; this score is not calibrated and does not prove causality. Check the correlated window against metrics, traces, and recent deployments.")
+            else:
+                lines.append("\nThis is a rule-based lead, not causal proof. Check the correlated window against metrics, traces, and recent deployments.")
             return "\n".join(lines)
         if result.findings:
             finding = result.findings[0]
@@ -148,6 +162,6 @@ def answer_follow_up(question: str, result: AnalysisResult | None) -> str:
 
     return (
         "I couldn't find a direct log match for that question. "
-        + (f"The current leading hypothesis is **{result.hypotheses[0].summary}**. " if result.hypotheses else "No specific root cause is ranked yet. ")
+        + (f"The current leading signal is **{result.hypotheses[0].summary}**. " if result.hypotheses else "No specific root cause is ranked yet. ")
         + "Try asking about a service, error phrase, time window, evidence, or safe next check."
     )

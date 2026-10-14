@@ -53,6 +53,7 @@ class RootCauseHypothesis:
     confidence: float
     evidence: tuple[str, ...]
     related_services: tuple[str, ...]
+    method: str = "rules"
 
 
 @dataclass(frozen=True)

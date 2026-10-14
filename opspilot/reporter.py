@@ -36,11 +36,13 @@ def build_markdown_report(result: AnalysisResult) -> str:
     if result.hypotheses:
         for index, hypothesis in enumerate(result.hypotheses, start=1):
             services = ", ".join(hypothesis.related_services) or "unknown service"
+            score_name = "Model match score" if hypothesis.method == "model" else "Rule evidence score"
             lines.extend([
                 f"### {index}. {hypothesis.summary}",
-                f"- Confidence: {_pct(hypothesis.confidence)}",
+                f"- {score_name}: {_pct(hypothesis.confidence)}",
                 f"- Score: {hypothesis.score:.1f}/100",
                 f"- Related services: {services}",
+                f"- Method: {'local trained classifier' if hypothesis.method == 'model' else 'transparent rules/statistics'}",
                 "- Evidence:",
             ])
             lines.extend(f"  - {item}" for item in hypothesis.evidence)

@@ -10,15 +10,17 @@ OpsPilot AI is a local-first incident investigation dashboard for application lo
 - Infers likely severity from exception/error wording when a log has no explicit level, while preserving the original line as evidence.
 - Detects transparent, explainable error patterns and simple statistical anomalies across dependencies, DNS/TLS, storage, CPU, queues, rate limits, process restarts, latency, and repeated errors.
 - Correlates nearby events into an incident window.
-- Ranks likely root causes using weighted evidence from patterns, ordering, and severity.
+- Ranks likely root causes using weighted evidence from patterns, ordering, and severity. A small local text classifier adds a secondary lead for high-signal error messages not already explained by a specific rule.
 - Shows read-only recommended actions. It never runs shell commands, restarts services, or changes infrastructure.
 - Exports a Markdown incident report.
 
 ## Architecture
 
-The flow is: Browser -> Streamlit chat UI (`app.py`) -> local conversation responder (`opspilot/conversation.py`) -> analysis pipeline (`opspilot/pipeline.py`) -> parser, detector, correlator, ranker, safe actions, and reporter. Each stage is a small Python module so it can be tested independently and replaced later. The responder selects grounded answers from the analysis result; it does not call a hosted language model.
+The flow is: Browser -> Streamlit chat UI (`app.py`) -> local conversation responder (`opspilot/conversation.py`) -> analysis pipeline (`opspilot/pipeline.py`) -> parser, transparent detector, correlator, evidence ranker, optional classifier lead, safe actions, and reporter. Each stage is a small Python module so it can be tested independently and replaced later. The responder selects grounded answers from the analysis result; it does not call a hosted language model.
 
-The MVP uses the Python standard library, pandas for table preparation, and Streamlit for the UI. No paid API, remote LLM, database, or scikit-learn model is required. The chat-style interaction uses a local deterministic responder—not ChatGPT—and explains when a cause is uncertain. Logs stay in the current app session and are not sent to an AI provider or saved as incident history.
+The local AI model is a supervised text classifier trained in this repository: word and character TF-IDF features feed a multinomial logistic-regression classifier for 12 common incident-cause categories. It is CPU-friendly, has no external model download, and is bundled as a small versioned artifact at `models/log_cause_classifier.joblib`. A separate 25% stratified holdout is used for the reported evaluation; after evaluation, the deployment artifact is refit on all labeled examples. The dataset is a small curated synthetic prototype set, so its scores are not calibrated probabilities and should not be presented as production accuracy. `models/evaluation.json` also records how many holdout cases passed the cautious model-score gate. Transparent rules take priority, and a model lead includes the triggering log lines. Unknown or ambiguous logs still get parsed and shown without forcing a specific cause.
+
+The chat-style interaction uses a local deterministic responder—not ChatGPT or a general-purpose LLM. The model classifies log messages; it does not generate free-form text. Logs stay in the current app session and are not sent to an AI provider or saved as incident history.
 
 ## Directory structure
 
@@ -29,6 +31,7 @@ opspilot-ai/
 ├── docker-compose.yml             # One-command local container run
 ├── requirements.txt               # Runtime dependencies
 ├── requirements-dev.txt           # Test/development dependencies
+├── train_model.py                 # Reproducible classifier training and evaluation
 ├── .env.example                   # Optional UI configuration
 ├── .gitignore
 ├── README.md
@@ -37,12 +40,18 @@ opspilot-ai/
 │   ├── payments-tls.log           # Expired upstream certificate
 │   ├── worker-queue.log           # Queue backlog in nested JSON logs
 │   └── catalog-storage.log         # Full filesystem and failed writes
+├── training_data/
+│   └── log_cause_examples.jsonl    # Curated labeled examples for 12 cause types
+├── models/
+│   ├── log_cause_classifier.joblib # Bundled CPU-friendly model artifact
+│   └── evaluation.json             # Dataset hash, versions, holdout metrics
 ├── opspilot/
 │   ├── __init__.py
 │   ├── actions.py                 # Safe recommended actions
 │   ├── correlator.py              # Temporal/service correlation
 │   ├── conversation.py             # Grounded chat answers and log detection
 │   ├── detector.py                # Rules and transparent statistics
+│   ├── ml_model.py                # Local classifier loading and cautious inference
 │   ├── models.py                  # Typed dataclasses for pipeline output
 │   ├── parser.py                  # Plain-text and JSON log parsing
 │   ├── pipeline.py                # End-to-end orchestration
@@ -94,6 +103,14 @@ Then open `http://localhost:8501`. Stop it with `Ctrl+C`, or run `docker compose
 3. Ask a follow-up such as “Why is this the leading cause?”, “Show the error lines”, “Which services are affected?”, or “What should I check next?”. Replies use the active analysis.
 4. Expand **View findings and normalized events** to inspect parsed records, or download the Markdown incident report.
 
+To retrain the model after editing its examples, activate the virtual environment and run:
+
+```powershell
+python train_model.py
+```
+
+This prints holdout accuracy and macro F1, writes the evaluation metadata, and then trains the artifact on the full dataset. Commit both files under `models/` with the dataset and code changes so local, Docker, and Streamlit deployments use the same model.
+
 Supported examples include:
 
 ```text
@@ -111,13 +128,13 @@ The parser also accepts JSON arrays, common CSV columns (`timestamp`, `severity`
 
 ## Design notes and next steps
 
-The rules are deliberately visible in `opspilot/detector.py` and the ranking explanation is shown in the UI. This makes the prototype useful for learning and interviewing: an engineer can explain why a hypothesis was produced instead of saying that an opaque model guessed it.
+The rules are deliberately visible in `opspilot/detector.py`; classifier training and the labeled examples are also versioned and reproducible. The UI marks model-derived hypotheses separately and shows their evidence. This makes the prototype useful for learning and interviewing: an engineer can explain whether a hypothesis came from an explicit rule or a learned text pattern instead of presenting either as proven causality.
 
 Good follow-up iterations are adding Kubernetes event ingestion, structured log schema configuration, persistence for incident history, a feedback button for analyst-confirmed causes, and optional local LLM assistance behind an explicit feature flag.
 
 ## Verification
 
-The test suite covers parsing, malformed input handling, pattern/anomaly detection, root-cause ranking, end-to-end analysis, and report generation. Run it with:
+The test suite covers parsing, malformed input handling, pattern/anomaly detection, root-cause ranking, classifier-assisted analysis, chat behavior, app rendering, and report generation. Run it with:
 
 ```powershell
 python -m pytest -q

@@ -7,6 +7,7 @@ from collections import Counter
 from .actions import recommend_actions
 from .correlator import correlate_events
 from .detector import detect_findings
+from .ml_model import predict_cause_hypotheses
 from .models import AnalysisResult
 from .parser import parse_log_text
 from .ranker import rank_hypotheses
@@ -25,10 +26,12 @@ def _build_assessment(events, findings, hypotheses) -> str:
         top = hypotheses[0]
         line_evidence = [item for item in top.evidence if item.startswith("Line ")]
         example = f" Example evidence: {line_evidence[0]}." if line_evidence else ""
+        method = "trained-model signal" if top.method == "model" else "rule-based signal"
+        score = "model match score" if top.method == "model" else "evidence score"
         return (
             f"Read {len(events)} log entries: {errors} error-level and {warnings} warning-level. "
-            f"The strongest signal is: {top.summary} ({top.confidence:.0%} evidence score).{example}"
-            f" This is a rule-based lead to validate against metrics, traces, and recent changes.{service_text}"
+            f"The strongest {method} is: {top.summary} ({top.confidence:.0%} {score}).{example}"
+            f" Treat this as a lead to validate against metrics, traces, and recent changes.{service_text}"
         )
 
     if errors:
@@ -54,6 +57,17 @@ def analyze_log_text(text: str) -> AnalysisResult:
     findings = detect_findings(events)
     context = correlate_events(events)
     hypotheses = rank_hypotheses(findings, events, context)
+    hypotheses.extend(predict_cause_hypotheses(events, findings, hypotheses))
+    hypotheses.sort(
+        key=lambda hypothesis: (
+            0 if hypothesis.method == "rules" and hypothesis.category not in {"unknown", "anomaly"}
+            else 1 if hypothesis.method == "model"
+            else 2,
+            -hypothesis.score,
+            hypothesis.summary,
+        )
+    )
+    hypotheses = hypotheses[:5]
     assessment = _build_assessment(events, findings, hypotheses)
     return AnalysisResult(
         events=events,

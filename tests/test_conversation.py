@@ -12,7 +12,7 @@ def test_opening_answer_summarizes_evidence_without_claiming_proof():
     result = analyze_log_text("2026-10-14T10:00:00Z ERROR api database connection refused")
     answer = build_incident_answer(result)
     assert "1 events" in answer
-    assert "Leading lead" in answer
+    assert "Leading signal" in answer
     assert "not proof" in answer
 
 

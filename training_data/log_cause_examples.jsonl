@@ -1,0 +1,312 @@
+{"text":"connection pool exhausted while waiting for a free database connection","label":"database"}
+{"text":"postgres reports maximum number of clients already reached","label":"database"}
+{"text":"unable to acquire a connection from the JDBC pool before deadline","label":"database"}
+{"text":"mysql rejected the session because too many connections are open","label":"database"}
+{"text":"remaining connection slots are reserved for database administrators","label":"database"}
+{"text":"application could not borrow a connection from pgbouncer","label":"database"}
+{"text":"database pool starvation is blocking new requests","label":"database"}
+{"text":"transaction could not obtain a database session from the pool","label":"database"}
+{"text":"connection lease expired before the query could start","label":"database"}
+{"text":"database server dropped the client during transaction commit","label":"database"}
+{"text":"ORM timed out while checking out a connection","label":"database"}
+{"text":"SQL server refused another client session due to its connection limit","label":"database"}
+{"text":"database sessions are saturated and requests are queuing","label":"database"}
+{"text":"failed to return a connection to the application pool","label":"database"}
+{"text":"client connection was reset while reading from postgres","label":"database"}
+{"text":"database connection manager reached its configured pool maximum","label":"database"}
+{"text":"downstream inventory endpoint stopped responding to the caller","label":"dependency"}
+{"text":"RPC deadline expired while requesting customer profile data","label":"dependency"}
+{"text":"connection to the billing service was reset by the remote host","label":"dependency"}
+{"text":"gateway received an invalid response from the upstream service","label":"dependency"}
+{"text":"remote payment provider returned a temporary server failure","label":"dependency"}
+{"text":"service discovery returned no healthy instances for catalog","label":"dependency"}
+{"text":"unable to complete the request to the shipping API","label":"dependency"}
+{"text":"upstream call exceeded its response budget and was cancelled","label":"dependency"}
+{"text":"worker lost its session with the message broker","label":"dependency"}
+{"text":"backend dependency is unavailable after repeated connection attempts","label":"dependency"}
+{"text":"remote service closed the stream before returning a response","label":"dependency"}
+{"text":"downstream returned an unexpected protocol response","label":"dependency"}
+{"text":"service call aborted because the remote endpoint was unhealthy","label":"dependency"}
+{"text":"request to the fraud scoring provider did not complete","label":"dependency"}
+{"text":"upstream connection was terminated before headers arrived","label":"dependency"}
+{"text":"application could not reach the configured partner endpoint","label":"dependency"}
+{"text":"container was terminated after exceeding its memory allowance","label":"memory"}
+{"text":"heap allocation failed while building the response payload","label":"memory"}
+{"text":"runtime cannot reserve enough memory for another worker","label":"memory"}
+{"text":"garbage collector is spending most of its time under heap pressure","label":"memory"}
+{"text":"process was killed by the kernel memory manager","label":"memory"}
+{"text":"native allocator returned an out of memory error","label":"memory"}
+{"text":"memory usage reached the pod limit during image processing","label":"memory"}
+{"text":"unable to allocate a buffer for the incoming request","label":"memory"}
+{"text":"application heap grew continuously until the runtime aborted","label":"memory"}
+{"text":"container memory pressure triggered an eviction","label":"memory"}
+{"text":"cache expansion consumed the remaining process memory","label":"memory"}
+{"text":"worker could not allocate memory for the batch","label":"memory"}
+{"text":"Java heap space exhausted while serializing records","label":"memory"}
+{"text":"memory cgroup reported an oom kill for the process","label":"memory"}
+{"text":"request failed because there was no memory available","label":"memory"}
+{"text":"application exceeded its configured resident memory limit","label":"memory"}
+{"text":"write failed because the mounted volume has no free blocks","label":"storage"}
+{"text":"filesystem is mounted read only and the upload could not be saved","label":"storage"}
+{"text":"temporary directory ran out of space during extraction","label":"storage"}
+{"text":"inode limit reached on the container writable layer","label":"storage"}
+{"text":"database snapshot could not be written to the full disk","label":"storage"}
+{"text":"volume capacity is exhausted and log rotation cannot continue","label":"storage"}
+{"text":"operating system returned enospc for the artifact directory","label":"storage"}
+{"text":"persistent volume is reporting a storage capacity error","label":"storage"}
+{"text":"application cannot create its local state file","label":"storage"}
+{"text":"disk usage crossed the reserved capacity threshold","label":"storage"}
+{"text":"failed to append audit record because the filesystem is full","label":"storage"}
+{"text":"container overlay filesystem has reached its size limit","label":"storage"}
+{"text":"volume became unavailable while flushing buffered data","label":"storage"}
+{"text":"no space remains for the application cache file","label":"storage"}
+{"text":"write operation failed on a read only mount","label":"storage"}
+{"text":"filesystem capacity prevented creation of a temporary file","label":"storage"}
+{"text":"resolver could not find an address for orders.internal","label":"dns"}
+{"text":"name lookup failed for the configured database host","label":"dns"}
+{"text":"getaddrinfo returned a temporary resolution error","label":"dns"}
+{"text":"service hostname does not exist in the cluster DNS zone","label":"dns"}
+{"text":"pod cannot resolve the cache endpoint name","label":"dns"}
+{"text":"no address records were returned for the partner API","label":"dns"}
+{"text":"DNS response timed out while looking up the auth service","label":"dns"}
+{"text":"resolver returned NXDOMAIN for the configured upstream","label":"dns"}
+{"text":"hostname resolution failed inside the application container","label":"dns"}
+{"text":"service discovery could not translate the endpoint name","label":"dns"}
+{"text":"temporary name resolution failure blocked the request","label":"dns"}
+{"text":"lookup for queue-broker.cluster returned no such host","label":"dns"}
+{"text":"the configured hostname has no usable address","label":"dns"}
+{"text":"DNS server refused the query from this workload","label":"dns"}
+{"text":"resolver returned SERVFAIL for the payments endpoint","label":"dns"}
+{"text":"unable to resolve internal service record after retries","label":"dns"}
+{"text":"peer rejected the TLS handshake because the certificate expired","label":"tls"}
+{"text":"certificate chain ends at an authority that is not trusted","label":"tls"}
+{"text":"client and server could not agree on a TLS protocol","label":"tls"}
+{"text":"hostname on the presented certificate does not match the endpoint","label":"tls"}
+{"text":"secure channel setup failed during certificate verification","label":"tls"}
+{"text":"certificate is not valid yet according to the container clock","label":"tls"}
+{"text":"mutual TLS client certificate was rejected by the server","label":"tls"}
+{"text":"TLS negotiation closed before the secure session was established","label":"tls"}
+{"text":"certificate authority is missing from the runtime trust store","label":"tls"}
+{"text":"remote peer presented an incomplete certificate chain","label":"tls"}
+{"text":"SSL peer certificate validation returned a trust error","label":"tls"}
+{"text":"certificate renewal did not reach the active proxy","label":"tls"}
+{"text":"secure connection failed because the certificate was revoked","label":"tls"}
+{"text":"TLS alert was received while opening the upstream connection","label":"tls"}
+{"text":"server certificate signature could not be verified","label":"tls"}
+{"text":"the API endpoint requires a client certificate that was not provided","label":"tls"}
+{"text":"JWT signature could not be verified with the configured signing key","label":"authentication"}
+{"text":"OAuth token introspection returned inactive for the service client","label":"authentication"}
+{"text":"IAM denied the role assumption request from this workload","label":"authentication"}
+{"text":"the service principal lacks permission to publish to this topic","label":"authentication"}
+{"text":"login exchange failed because the refresh credential is invalid","label":"authentication"}
+{"text":"request was rejected with forbidden because the caller has no grant","label":"authentication"}
+{"text":"Kubernetes service account token audience did not match the API server","label":"authentication"}
+{"text":"the application identity is disabled in the tenant policy","label":"authentication"}
+{"text":"token validation failed because the issuer is not trusted","label":"authentication"}
+{"text":"access was denied after the signing certificate for the client assertion changed","label":"authentication"}
+{"text":"cgroup CPU quota caused sustained throttling during the export job","label":"cpu"}
+{"text":"node run queue is long and the service threads cannot get scheduled","label":"cpu"}
+{"text":"CPU utilization hit 98 percent while the request workers were active","label":"cpu"}
+{"text":"Kubernetes reports the container is being throttled for CPU","label":"cpu"}
+{"text":"host processor saturation is delaying readiness checks","label":"cpu"}
+{"text":"the compiler workload starved API threads of CPU time","label":"cpu"}
+{"text":"per-core usage is maxed out after the new image processing release","label":"cpu"}
+{"text":"virtual machine steal usage rose and workers missed their scheduling windows","label":"cpu"}
+{"text":"CPU limit is constraining the pod under normal incoming traffic","label":"cpu"}
+{"text":"request handlers are runnable but blocked waiting for processor time","label":"cpu"}
+{"text":"psycopg could not get a connection from the SQLAlchemy pool","label":"database"}
+{"text":"PostgreSQL rejected startup because max_connections was reached","label":"database"}
+{"text":"query failed when the database closed the idle client session","label":"database"}
+{"text":"HikariCP timed out waiting for an available JDBC connection","label":"database"}
+{"text":"transaction rolled back after the database session was lost","label":"database"}
+{"text":"MongoDB server selection timed out before a connection was established","label":"database"}
+{"text":"RDS reports no free connection slots for this application user","label":"database"}
+{"text":"database socket reset while the service was reading a result set","label":"database"}
+{"text":"connection checkout exceeded the configured pool wait timeout","label":"database"}
+{"text":"the SQL query could not start because the pool is at capacity","label":"database"}
+{"text":"inventory API returned HTTP 502 from its upstream gateway","label":"dependency"}
+{"text":"gRPC call to the pricing service ended with unavailable","label":"dependency"}
+{"text":"connection to the external tax provider timed out","label":"dependency"}
+{"text":"search backend closed the socket before sending its response","label":"dependency"}
+{"text":"object storage endpoint is unreachable from the application subnet","label":"dependency"}
+{"text":"downstream identity service returned an internal server error","label":"dependency"}
+{"text":"remote configuration service did not respond before the deadline","label":"dependency"}
+{"text":"service mesh marked every instance of the inventory dependency unhealthy","label":"dependency"}
+{"text":"billing endpoint returned a malformed response during the RPC call","label":"dependency"}
+{"text":"the application lost connectivity to the external webhook provider","label":"dependency"}
+{"text":"resolver timed out while querying the cluster DNS service","label":"dns"}
+{"text":"could not resolve api.partner.example from the worker pod","label":"dns"}
+{"text":"DNS query for the redis service returned NXDOMAIN","label":"dns"}
+{"text":"Kubernetes service name has no matching DNS record","label":"dns"}
+{"text":"getaddrinfo failed with EAI_AGAIN for the configured hostname","label":"dns"}
+{"text":"the resolver returned SERVFAIL for the database endpoint","label":"dns"}
+{"text":"no A or AAAA record exists for the internal API name","label":"dns"}
+{"text":"container cannot resolve the broker address after the network change","label":"dns"}
+{"text":"search domain lookup failed for payments.namespace.svc","label":"dns"}
+{"text":"DNS response from the node resolver exceeded the query timeout","label":"dns"}
+{"text":"request duration increased after the latest application release","label":"latency"}
+{"text":"p99 latency breached the objective for the checkout route","label":"latency"}
+{"text":"users are seeing slow responses even though the endpoint is healthy","label":"latency"}
+{"text":"the API took 12 seconds to finish a normally fast operation","label":"latency"}
+{"text":"trace shows most of the request time was spent waiting on a downstream call","label":"latency"}
+{"text":"response time percentile is elevated across all replicas","label":"latency"}
+{"text":"database query duration increased from milliseconds to several seconds","label":"latency"}
+{"text":"the background job now takes four times longer to complete","label":"latency"}
+{"text":"service objective is missed because end-to-end duration is too high","label":"latency"}
+{"text":"slow endpoint requests are accumulating while total throughput falls","label":"latency"}
+{"text":"Kubernetes recorded an OOMKilled termination for the API container","label":"memory"}
+{"text":"JVM heap reached its maximum and allocation failed","label":"memory"}
+{"text":"pod was evicted because node memory pressure exceeded its threshold","label":"memory"}
+{"text":"resident set size keeps climbing after each batch completes","label":"memory"}
+{"text":"node process aborted with cannot allocate memory for buffer","label":"memory"}
+{"text":"Go runtime fatal error: out of memory","label":"memory"}
+{"text":"memory limit was exceeded while decoding the uploaded archive","label":"memory"}
+{"text":"kernel killed the worker after its memory cgroup limit was reached","label":"memory"}
+{"text":"heap dump shows retained objects increasing on every request","label":"memory"}
+{"text":"allocator failed while reserving space for another application thread","label":"memory"}
+{"text":"systemd restarted the service after the main process exited with status 137","label":"process_crash"}
+{"text":"liveness probe failed repeatedly and Kubernetes restarted the pod","label":"process_crash"}
+{"text":"gunicorn worker exited unexpectedly and was replaced","label":"process_crash"}
+{"text":"application terminated with SIGSEGV during startup","label":"process_crash"}
+{"text":"container restarts continue increasing after the new deployment","label":"process_crash"}
+{"text":"uncaught panic caused the server process to exit","label":"process_crash"}
+{"text":"entrypoint failed before the HTTP listener could start","label":"process_crash"}
+{"text":"node supervisor reports repeated crashes of the background worker","label":"process_crash"}
+{"text":"process received SIGKILL before finishing the scheduled task","label":"process_crash"}
+{"text":"health check failures caused the runtime to recycle the application","label":"process_crash"}
+{"text":"Kafka consumer group lag is increasing across every partition","label":"queue"}
+{"text":"SQS visible message count is growing faster than workers can poll","label":"queue"}
+{"text":"RabbitMQ ready messages are accumulating with no active consumers","label":"queue"}
+{"text":"oldest item age in the task queue is above the processing target","label":"queue"}
+{"text":"Kafka partition offsets are not advancing for the consumer group","label":"queue"}
+{"text":"publisher rate exceeds the worker completion rate","label":"queue"}
+{"text":"Celery workers are busy and the pending task list keeps growing","label":"queue"}
+{"text":"dead-letter queue received a surge of unprocessed messages","label":"queue"}
+{"text":"consumer heartbeat expired and the broker reassigned its partitions","label":"queue"}
+{"text":"background jobs are waiting because no worker slots are available","label":"queue"}
+{"text":"HTTP 429 response says the client exceeded its request quota","label":"rate_limit"}
+{"text":"provider returned Retry-After because our calls exceeded the burst allowance","label":"rate_limit"}
+{"text":"API gateway rejected requests after the per-minute limit was reached","label":"rate_limit"}
+{"text":"tenant has exhausted its monthly API quota","label":"rate_limit"}
+{"text":"upstream responded with too many requests for this API key","label":"rate_limit"}
+{"text":"client throttling policy is rejecting calls above the configured rate","label":"rate_limit"}
+{"text":"service returned quota_exceeded for the current billing period","label":"rate_limit"}
+{"text":"request was delayed by the partner's traffic shaping policy","label":"rate_limit"}
+{"text":"burst control rejected concurrent calls from the integration","label":"rate_limit"}
+{"text":"request allowance is exhausted until the next quota window","label":"rate_limit"}
+{"text":"write returned ENOSPC because the container filesystem is full","label":"storage"}
+{"text":"persistent volume claim has no remaining capacity","label":"storage"}
+{"text":"application cannot create a file because the mount is read-only","label":"storage"}
+{"text":"inode exhaustion prevents creation of additional log files","label":"storage"}
+{"text":"disk usage reached 100 percent on the data volume","label":"storage"}
+{"text":"upload failed because the temporary storage directory is full","label":"storage"}
+{"text":"container writable layer exceeded its configured size limit","label":"storage"}
+{"text":"snapshot writer failed to append data to the mounted filesystem","label":"storage"}
+{"text":"volume mount disappeared during the file flush operation","label":"storage"}
+{"text":"the service cannot persist state because available disk space is zero","label":"storage"}
+{"text":"x509 validation failed because the remote certificate has expired","label":"tls"}
+{"text":"SSL handshake failed due to an unknown certificate authority","label":"tls"}
+{"text":"certificate SAN does not contain the requested server hostname","label":"tls"}
+{"text":"client rejected the server certificate because it is not yet valid","label":"tls"}
+{"text":"peer closed the connection after receiving a TLS alert","label":"tls"}
+{"text":"mutual TLS failed because the client certificate chain is incomplete","label":"tls"}
+{"text":"certificate verification failed against the system trust bundle","label":"tls"}
+{"text":"TLS protocol negotiation failed between the proxy and backend","label":"tls"}
+{"text":"certificate was revoked by the issuing authority","label":"tls"}
+{"text":"HTTPS request failed because the certificate hostname check did not pass","label":"tls"}
+{"text":"workload identity was rejected by the token issuer","label":"authentication"}
+{"text":"access token audience does not match the requested service","label":"authentication"}
+{"text":"service account is not authorized to read this resource","label":"authentication"}
+{"text":"signature validation failed for the bearer credential","label":"authentication"}
+{"text":"refresh token has been revoked by the identity provider","label":"authentication"}
+{"text":"permission check denied the requested operation","label":"authentication"}
+{"text":"client secret configured for the integration is invalid","label":"authentication"}
+{"text":"principal does not have the required role assignment","label":"authentication"}
+{"text":"session credential expired before the request was processed","label":"authentication"}
+{"text":"authentication challenge failed for the service account","label":"authentication"}
+{"text":"identity provider rejected the application assertion","label":"authentication"}
+{"text":"authorization policy blocked access to the customer endpoint","label":"authentication"}
+{"text":"API key is disabled for this environment","label":"authentication"}
+{"text":"workload could not obtain credentials from the metadata service","label":"authentication"}
+{"text":"role binding does not grant access to the requested operation","label":"authentication"}
+{"text":"credential validation failed for the configured client","label":"authentication"}
+{"text":"request quota was exceeded for this API key","label":"rate_limit"}
+{"text":"gateway throttled the caller after too many requests","label":"rate_limit"}
+{"text":"partner endpoint rejected traffic due to its burst policy","label":"rate_limit"}
+{"text":"retry budget is exhausted for the current time window","label":"rate_limit"}
+{"text":"client is sending requests faster than the allowed limit","label":"rate_limit"}
+{"text":"tenant quota has been reached for the reporting API","label":"rate_limit"}
+{"text":"upstream throttling policy delayed this operation","label":"rate_limit"}
+{"text":"service returned a retry after interval for this caller","label":"rate_limit"}
+{"text":"rate control rejected the request before execution","label":"rate_limit"}
+{"text":"too many concurrent requests were submitted by this client","label":"rate_limit"}
+{"text":"API usage limit for the subscription has been reached","label":"rate_limit"}
+{"text":"burst traffic exceeded the configured request allowance","label":"rate_limit"}
+{"text":"provider throttled the integration until the next quota window","label":"rate_limit"}
+{"text":"client exceeded its per minute call allowance","label":"rate_limit"}
+{"text":"request rejected by the service level rate policy","label":"rate_limit"}
+{"text":"upstream quota response asked the client to retry later","label":"rate_limit"}
+{"text":"consumer offset is falling behind the newest queue message","label":"queue"}
+{"text":"message age continues to increase in the processing backlog","label":"queue"}
+{"text":"worker group is not keeping pace with the publish rate","label":"queue"}
+{"text":"partition has accumulated a large number of pending records","label":"queue"}
+{"text":"dead letter count increased after repeated delivery attempts","label":"queue"}
+{"text":"broker reports that the consumer has stopped polling","label":"queue"}
+{"text":"oldest unprocessed job exceeded the service objective","label":"queue"}
+{"text":"messages remain pending because all consumers are busy","label":"queue"}
+{"text":"consumer lag grew after the worker deployment","label":"queue"}
+{"text":"queue depth is rising faster than workers can drain it","label":"queue"}
+{"text":"broker rejected new work because the partition is full","label":"queue"}
+{"text":"background job backlog is delaying invoice processing","label":"queue"}
+{"text":"consumer repeatedly lost its assignment and stopped making progress","label":"queue"}
+{"text":"pending task count exceeded the normal operating range","label":"queue"}
+{"text":"worker throughput dropped while incoming messages increased","label":"queue"}
+{"text":"scheduled jobs are waiting too long for an available worker","label":"queue"}
+{"text":"CPU throttling prevented the worker from finishing its task","label":"cpu"}
+{"text":"processor usage remained saturated across all application cores","label":"cpu"}
+{"text":"container exceeded its CPU quota during request handling","label":"cpu"}
+{"text":"runnable thread count increased while CPU capacity stayed flat","label":"cpu"}
+{"text":"compute usage is pinned near maximum for this workload","label":"cpu"}
+{"text":"event loop delay increased during heavy processor contention","label":"cpu"}
+{"text":"scheduler is delaying the process because CPU shares are exhausted","label":"cpu"}
+{"text":"CPU steal time is starving the virtual machine workload","label":"cpu"}
+{"text":"worker throughput fell as processor saturation increased","label":"cpu"}
+{"text":"request threads are spending time waiting for CPU scheduling","label":"cpu"}
+{"text":"high compute demand is causing health checks to miss deadlines","label":"cpu"}
+{"text":"processor quota is too small for the current batch size","label":"cpu"}
+{"text":"CPU contention is delaying garbage collection and request work","label":"cpu"}
+{"text":"load on the application node is above its normal operating range","label":"cpu"}
+{"text":"CPU resources are exhausted while compiling the report","label":"cpu"}
+{"text":"runtime scheduler is throttling the service under load","label":"cpu"}
+{"text":"request spent 4.8 seconds waiting for the search response","label":"latency"}
+{"text":"p95 response duration rose well above the service objective","label":"latency"}
+{"text":"database query execution took longer than the expected budget","label":"latency"}
+{"text":"checkout endpoint is responding much slower than normal","label":"latency"}
+{"text":"tail latency increased after the cache miss rate climbed","label":"latency"}
+{"text":"operation duration exceeded the configured response deadline","label":"latency"}
+{"text":"slow request trace points to a delay in inventory lookup","label":"latency"}
+{"text":"median processing time doubled for the latest release","label":"latency"}
+{"text":"request queue wait dominates the end to end duration","label":"latency"}
+{"text":"service response time has regressed across several endpoints","label":"latency"}
+{"text":"long running query exceeded its statement time budget","label":"latency"}
+{"text":"page rendering duration increased under current traffic","label":"latency"}
+{"text":"API response took several seconds after connection setup","label":"latency"}
+{"text":"background task execution duration is above its threshold","label":"latency"}
+{"text":"slow downstream response is increasing total request duration","label":"latency"}
+{"text":"request timing exceeded the user facing latency objective","label":"latency"}
+{"text":"application exited unexpectedly with a nonzero status","label":"process_crash"}
+{"text":"worker restarted repeatedly after an uncaught runtime exception","label":"process_crash"}
+{"text":"process terminated during startup before binding its port","label":"process_crash"}
+{"text":"container entered a restart loop after failing its health probe","label":"process_crash"}
+{"text":"segmentation fault stopped the request handler","label":"process_crash"}
+{"text":"child process exited before the parent received a response","label":"process_crash"}
+{"text":"service crashed while loading its configuration","label":"process_crash"}
+{"text":"runtime aborted after an unhandled exception in the worker","label":"process_crash"}
+{"text":"main process was terminated by the operating system","label":"process_crash"}
+{"text":"startup probe continued failing and the container was restarted","label":"process_crash"}
+{"text":"worker process disappeared during batch execution","label":"process_crash"}
+{"text":"application shut down unexpectedly while handling a request","label":"process_crash"}
+{"text":"binary exited with signal 11 during request processing","label":"process_crash"}
+{"text":"service repeatedly failed to start after the latest deployment","label":"process_crash"}
+{"text":"runtime panic caused the server process to abort","label":"process_crash"}
+{"text":"child worker was killed before finishing its assigned job","label":"process_crash"}

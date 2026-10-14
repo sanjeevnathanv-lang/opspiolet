@@ -10,6 +10,7 @@ import pandas as pd
 import streamlit as st
 
 from opspilot.conversation import answer_follow_up, build_incident_answer, looks_like_log_input
+from opspilot.ml_model import classifier_status
 from opspilot.models import AnalysisResult
 from opspilot.pipeline import analyze_log_text
 from opspilot.reporter import build_markdown_report
@@ -132,14 +133,23 @@ def _render_result(result: AnalysisResult, sources: list[str]) -> None:
     if result.hypotheses:
         lead = result.hypotheses[0]
         st.markdown(f"**Leading hypothesis:** {lead.summary}")
+        score_name = "Classifier match score" if lead.method == "model" else "Rule evidence score"
         st.caption(
-            f"Rule evidence score: {lead.confidence:.0%} · Related services: "
+            f"{score_name}: {lead.confidence:.0%} · Related services: "
             f"{', '.join(lead.related_services) or 'not identified'}"
         )
-        st.caption("This score reflects matching rules and corroborating log evidence; it is not a calibrated probability.")
+        if lead.method == "model":
+            st.caption("A small local text model learned from bundled examples; this match score is not a calibrated probability.")
+        else:
+            st.caption("This score reflects matching rules and corroborating log evidence; it is not a calibrated probability.")
         with st.expander("Why OpsPilot ranked this first", expanded=True):
             for evidence in lead.evidence[:4]:
                 st.markdown(f"- {evidence}")
+        if len(result.hypotheses) > 1:
+            with st.expander("Other ranked signals"):
+                for hypothesis in result.hypotheses[1:]:
+                    label = "Local model" if hypothesis.method == "model" else "Rules/statistics"
+                    st.markdown(f"- **{hypothesis.summary}** · {label} · score {hypothesis.score:.1f}/100")
     elif result.findings:
         st.markdown("**Signal found, but no specific cause is established yet.**")
         for finding in result.findings[:3]:
@@ -192,8 +202,16 @@ with st.sidebar:
         st.rerun()
     st.divider()
     st.markdown("**How it works**")
-    st.caption("Parse → detect → correlate → rank → explain")
-    st.caption("Runs locally with transparent rules. No paid AI API; no infrastructure actions.")
+    st.caption("Parse → detect → correlate → classify → explain")
+    model_ready, model_metadata, model_error = classifier_status()
+    if model_ready and model_metadata:
+        st.caption(
+            f"Local classifier: {len(model_metadata.get('classes', []))} cause types · "
+            f"{model_metadata.get('examples', 0)} training examples"
+        )
+    else:
+        st.warning(f"Local classifier unavailable ({model_error}); rule-based analysis still works.")
+    st.caption("Model and transparent rules run locally. No paid AI API; no infrastructure actions.")
     st.divider()
     st.markdown("**Privacy**")
     st.caption("Logs are analyzed in this app session and are not sent to an AI provider or saved as incident history.")

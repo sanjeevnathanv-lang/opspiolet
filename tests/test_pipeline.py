@@ -35,6 +35,17 @@ def test_pipeline_gives_a_cautious_answer_for_unfamiliar_logs():
     assert result.recommendations
 
 
+def test_local_classifier_can_add_a_lead_for_an_unmatched_log_message():
+    result = analyze_log_text(
+        "2026-10-14T10:00:00Z ERROR api name lookup for payments.internal returned NXDOMAIN"
+    )
+    model_hypotheses = [hypothesis for hypothesis in result.hypotheses if hypothesis.method == "model"]
+    assert model_hypotheses
+    assert "DNS" in model_hypotheses[0].summary
+    assert any("Line 1" in item and "NXDOMAIN" in item for item in model_hypotheses[0].evidence)
+    assert any("name resolution" in action.title.lower() for action in result.recommendations)
+
+
 def test_pipeline_assesses_healthy_but_unfamiliar_logs():
     result = analyze_log_text("worker-7 completed task 42 in 18ms\nworker-8 completed task 43 in 22ms")
     assert "No explicit error" in result.assessment

@@ -12,6 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py .
 COPY opspilot ./opspilot
 COPY sample_logs ./sample_logs
+COPY models ./models
 
 EXPOSE 8501
 

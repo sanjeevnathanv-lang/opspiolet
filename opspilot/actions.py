@@ -33,6 +33,17 @@ def recommend_actions(hypotheses: list[RootCauseHypothesis]) -> list[ActionRecom
                 ),
                 "Avoid increasing limits blindly; confirm whether usage is a leak, traffic change, or bad release.",
             ))
+        elif "process" in summary or "crash" in summary or "restart" in summary:
+            actions.append(ActionRecommendation(
+                "Inspect process exits and health-check history",
+                "The evidence suggests an application process may be exiting or restarting unexpectedly.",
+                (
+                    "Review termination reason, exit status, and health-probe events around the first restart.",
+                    "Compare the restart timeline with the latest image, configuration, and dependency changes.",
+                    "Check resource limits and application startup logs before choosing a recovery action.",
+                ),
+                "Do not repeatedly restart the workload without identifying the termination cause and data impact.",
+            ))
         elif "credential" in summary or "identity" in summary:
             actions.append(ActionRecommendation(
                 "Verify identity and configuration safely",
