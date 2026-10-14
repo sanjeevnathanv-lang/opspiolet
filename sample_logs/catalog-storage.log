@@ -1,0 +1,6 @@
+2026-10-14T14:05:00Z INFO catalog-api export requested service=catalog-api export_id=exp-882
+2026-10-14T14:05:02Z ERROR catalog-api no space left on device while writing export service=catalog-api path=/var/tmp/export.csv
+2026-10-14T14:05:03Z WARN catalog-api export retry scheduled service=catalog-api attempt=1
+2026-10-14T14:05:04Z ERROR catalog-api write failed with ENOSPC service=catalog-api export_id=exp-882
+2026-10-14T14:05:10Z ERROR catalog-api readiness check failed service=catalog-api reason=read-only file system
+2026-10-14T14:05:12Z WARN catalog-api container restarting after failed health check service=catalog-api

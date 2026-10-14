@@ -1,0 +1,6 @@
+{"timestamp":"2026-10-14T12:18:00Z","log":{"level":"INFO"},"service":{"name":"invoice-worker"},"message":"consumer started","partition":3}
+{"timestamp":"2026-10-14T12:18:10Z","log":{"level":"WARN"},"service":{"name":"invoice-worker"},"message":"consumer lag increased","lag":850}
+{"timestamp":"2026-10-14T12:18:20Z","log":{"level":"ERROR"},"service":{"name":"invoice-worker"},"message":"queue backlog exceeded processing threshold","queue":"invoice-events"}
+{"timestamp":"2026-10-14T12:18:30Z","log":{"level":"WARN"},"service":{"name":"invoice-worker"},"message":"retrying database write","attempt":3}
+{"timestamp":"2026-10-14T12:18:40Z","log":{"level":"ERROR"},"service":{"name":"invoice-worker"},"message":"consumer lag increased; oldest message age is 420 seconds","partition":3}
+{"timestamp":"2026-10-14T12:19:00Z","log":{"level":"INFO"},"service":{"name":"invoice-worker"},"message":"health check passed"}

@@ -1,0 +1,8 @@
+2026-10-14T11:42:01Z INFO payments-api request accepted request_id=pay-7401
+2026-10-14T11:42:01Z INFO payments-api calling https://risk.internal service=payments-api request_id=pay-7401
+2026-10-14T11:42:02Z ERROR payments-api certificate verify failed: certificate has expired service=payments-api upstream=risk.internal request_id=pay-7401
+2026-10-14T11:42:03Z WARN payments-api retrying upstream request service=payments-api attempt=1 request_id=pay-7401
+2026-10-14T11:42:04Z ERROR payments-api TLS handshake failed service=payments-api upstream=risk.internal request_id=pay-7402
+2026-10-14T11:42:05Z ERROR payments-api request failed with HTTP 502 service=payments-api request_id=pay-7402
+2026-10-14T11:43:10Z INFO payments-api health check started service=payments-api
+2026-10-14T11:43:11Z ERROR payments-api certificate verify failed: certificate has expired service=payments-api upstream=risk.internal

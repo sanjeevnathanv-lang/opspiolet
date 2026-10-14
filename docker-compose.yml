@@ -1,0 +1,9 @@
+services:
+  opspilot:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      OPSPILOT_TITLE: ${OPSPILOT_TITLE:-OpsPilot AI}
+    restart: unless-stopped
+
