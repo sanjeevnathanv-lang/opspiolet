@@ -4,7 +4,8 @@ OpsPilot AI is a local-first incident investigation dashboard for application lo
 
 ## What the MVP does
 
-- Accepts pasted logs or a `.log`/`.txt` upload in a Streamlit dashboard.
+- Provides a chat-first Streamlit workflow: paste logs or attach one or more `.log`, `.txt`, `.json`, `.jsonl`, or `.csv` files with the `+` control.
+- Answers common incident follow-ups about the leading cause, supporting evidence, affected services, error lines, time window, and safe next checks using the current conversation's analysis.
 - Parses timestamps, severity, service, and message text from plain text, JSON/JSONL, JSON arrays, CSV exports, and key-value (logfmt) logs.
 - Infers likely severity from exception/error wording when a log has no explicit level, while preserving the original line as evidence.
 - Detects transparent, explainable error patterns and simple statistical anomalies across dependencies, DNS/TLS, storage, CPU, queues, rate limits, process restarts, latency, and repeated errors.
@@ -15,9 +16,9 @@ OpsPilot AI is a local-first incident investigation dashboard for application lo
 
 ## Architecture
 
-The flow is: Browser -> Streamlit UI (`app.py`) -> analysis pipeline (`opspilot/pipeline.py`) -> parser, detector, correlator, ranker, safe actions, and reporter. Each stage is a small Python module so it can be tested independently and replaced later.
+The flow is: Browser -> Streamlit chat UI (`app.py`) -> local conversation responder (`opspilot/conversation.py`) -> analysis pipeline (`opspilot/pipeline.py`) -> parser, detector, correlator, ranker, safe actions, and reporter. Each stage is a small Python module so it can be tested independently and replaced later. The responder selects grounded answers from the analysis result; it does not call a hosted language model.
 
-The MVP uses the Python standard library, pandas for table preparation, and Streamlit for the UI. No paid API, LLM, database, or scikit-learn model is required.
+The MVP uses the Python standard library, pandas for table preparation, and Streamlit for the UI. No paid API, remote LLM, database, or scikit-learn model is required. The chat-style interaction uses a local deterministic responder—not ChatGPT—and explains when a cause is uncertain. Logs stay in the current app session and are not sent to an AI provider or saved as incident history.
 
 ## Directory structure
 
@@ -40,6 +41,7 @@ opspilot-ai/
 │   ├── __init__.py
 │   ├── actions.py                 # Safe recommended actions
 │   ├── correlator.py              # Temporal/service correlation
+│   ├── conversation.py             # Grounded chat answers and log detection
 │   ├── detector.py                # Rules and transparent statistics
 │   ├── models.py                  # Typed dataclasses for pipeline output
 │   ├── parser.py                  # Plain-text and JSON log parsing
@@ -48,6 +50,8 @@ opspilot-ai/
 │   └── reporter.py                # Markdown report generation
 └── tests/
     ├── conftest.py
+    ├── test_conversation.py
+    ├── test_app.py
     ├── test_detector.py
     ├── test_parser.py
     ├── test_pipeline.py
@@ -86,9 +90,9 @@ Then open `http://localhost:8501`. Stop it with `Ctrl+C`, or run `docker compose
 ## Using the dashboard
 
 1. Choose one of four bundled incident scenarios, or paste/upload your own text-based logs.
-2. Click **Analyze incident**.
-3. Review the incident window, findings, root-cause evidence, and safe actions.
-4. Download the generated Markdown report.
+2. OpsPilot parses the supplied records and responds with an incident summary, event counts, a ranked lead (when supported), matching evidence, and safe next checks.
+3. Ask a follow-up such as “Why is this the leading cause?”, “Show the error lines”, “Which services are affected?”, or “What should I check next?”. Replies use the active analysis.
+4. Expand **View findings and normalized events** to inspect parsed records, or download the Markdown incident report.
 
 Supported examples include:
 
